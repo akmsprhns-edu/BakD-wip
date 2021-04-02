@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -8,24 +8,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.ML" Version="1.5.5" />
     <PackageReference Include="Microsoft.ML.OnnxRuntime.Gpu" Version="1.7.1" />
-    <PackageReference Include="Microsoft.ML.OnnxRuntime.Managed" Version="1.7.1" />
-    <PackageReference Include="Microsoft.ML.OnnxTransformer" Version="1.5.5" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="model.1.fp16.onnx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="model.1.onnx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="model.1.optimized.onnx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="simple.onnx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="simple_fp16.onnx">
+    <None Update="onnx_inference_model.onnx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

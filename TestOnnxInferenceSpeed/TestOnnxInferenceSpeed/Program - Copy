@@ -18,7 +18,20 @@ namespace TestOnnxInferenceSpeed
             var rand = new Random();
             Console.WriteLine("Generationg random data");
             var inputDimensions = new int[] { 250, 15, 15, 2 };
+            //var inputDataList = new List<InputData>();
+            //for(int i = 0; i < 1000; i++)
+            //{
+            //    var inputData = new InputData()
+            //    {
+            //        Input = new float[450]
+            //    };
 
+            //    for(int j = 0; j < inputData.Input.Length; j++)
+            //    {
+            //        inputData.Input[j] = rand.Next(2);
+            //    }
+            //    inputDataList.Add(inputData);
+            //}
             var inputData = new float[inputDimensions[0] * inputDimensions[1] * inputDimensions[2] * inputDimensions[3]];
             for (int i = 0; i < inputData.Length; i++)
             {
@@ -31,6 +44,13 @@ namespace TestOnnxInferenceSpeed
             {
                 threads.Add(new Thread(() =>
                 {
+                    
+                    int? gpu = null;
+                    //var mlContext = new MLContext();
+                    //var dummyData = mlContext.Data.LoadFromEnumerable(new InputData[0]);
+                    //var pipeline = mlContext.Transforms.ApplyOnnxModel(ModelPath, gpuDeviceId: gpu);
+                    //var transformer = pipeline.Fit(dummyData);
+                    //var predictionEngine = mlContext.Model.CreatePredictionEngine<InputData, Prediction>(transformer);
                     var inferenceSession = new InferenceSession(ModelPath, SessionOptions.MakeSessionOptionWithCudaProvider(0));
                     
 
@@ -45,6 +65,9 @@ namespace TestOnnxInferenceSpeed
                         {
                             "output"
                         };
+                        //inputs.AddRange(
+                        //    inputDataList.Select(x => NamedOnnxValue.CreateFromTensor("input",new DenseTensor<float>(x.Input, inputDimensions)))
+                        //    );
 
                         using (var results = inferenceSession.Run(inputs, outputs))
                         {
@@ -56,6 +79,18 @@ namespace TestOnnxInferenceSpeed
                             //}
                             var count = result.AsEnumerable<float>().Count();
                         }
+
+                        //var data = mlContext.Data.LoadFromEnumerable(inputDataList);
+                        //foreach (var item in inputDataList)
+                        //{
+                        //    _ = predictionEngine.Predict(item).Evaluation;
+                        //}
+                        //var transformedDataView = transformer.Transform(data);
+                        //var transformedData = mlContext.Data.CreateEnumerable<Prediction>(
+                        //    transformedDataView,
+                        //    reuseRowObject: true
+                        //).Select(x => x.Evaluation);
+                        //Console.WriteLine(transformedData.Count());
                     }
                 }));
             }
